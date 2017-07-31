@@ -1,4 +1,5 @@
 import UIKit
+import SafariServices
 
 class TableViewController: UITableViewController {
     
@@ -51,6 +52,17 @@ extension TableViewController {
 
 extension TableViewController {
     
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if let fetcher = fetcher,
+            indexPath.row < fetcher.items.count,
+            case .loaded = fetcher.items[indexPath.row]
+        {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard
             let fetcher = fetcher,
@@ -60,8 +72,8 @@ extension TableViewController {
         }
         
         switch fetcher.items[indexPath.row] {
-        case .loaded:
-            break
+        case .loaded(let item):
+            show(url: item.url)
         case .notLoaded(let itemId):
             print("Item Id: \(itemId)")
         }
@@ -87,5 +99,10 @@ private extension TableViewController {
                 self.fetcher?.start()
             }
         }
+    }
+    
+    func show(url: URL) {
+        let safari = SFSafariViewController(url: url)
+        present(safari, animated: true, completion: nil)
     }
 }

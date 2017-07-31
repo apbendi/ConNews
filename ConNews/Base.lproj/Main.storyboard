@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Hacker News-->
         <scene sceneID="IPd-HR-FRC">
             <objects>
                 <tableViewController id="i6Y-BI-DMF" customClass="TableViewController" customModule="ConNews" customModuleProvider="target" sceneMemberID="viewController">
@@ -91,7 +91,9 @@
                             <outlet property="delegate" destination="i6Y-BI-DMF" id="fED-dy-PYZ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="w7m-zU-7xW"/>
+                    <navigationItem key="navigationItem" title="Hacker News" id="w7m-zU-7xW">
+                        <barButtonItem key="backBarButtonItem" title=" " id="1gW-AS-cWc"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ebv-XH-0c6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
