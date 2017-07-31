@@ -37,7 +37,7 @@ struct API {
         task.resume()
     }
     
-    static func fetchItem(with itemId: ItemId) {
+    static func fetchItem(with itemId: ItemId, callback: @escaping (Result<LoadedItem>) -> Void) {
         guard let url = itemURL(for: itemId) else {
             print("No Item")
             return
@@ -49,12 +49,15 @@ struct API {
                 return
             }
             
-            guard let json = try? JSONSerialization.jsonObject(with: data) else {
+            guard
+                let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
+                let item = LoadedItem(json: json)
+            else {
                 print("No JSON")
                 return
             }
             
-            print("Story: \(json)")
+            callback(.success(item))
         }
         
         task.resume()

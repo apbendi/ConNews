@@ -10,13 +10,8 @@ class ViewController: UIViewController {
             case .failure(let error):
                 print("Error fetching stories: \(error.localizedDescription)")
             case .success(let items):
-                guard let itemId = items.first else {
-                    print("No itmes")
-                    return
-                }
-                
-                
-                API.fetchItem(with: itemId)
+                let fetcher = ItemsFetcher(items)
+                fetcher.start()
             }
         }
     }
