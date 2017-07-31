@@ -18,6 +18,8 @@
 		B412011E1F2F7CAC00F1814D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = B412011D1F2F7CAC00F1814D /* Result.swift */; };
 		B41201201F2F84E800F1814D /* HNItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B412011F1F2F84E800F1814D /* HNItem.swift */; };
 		B41201241F2F91B000F1814D /* ItemsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41201231F2F91B000F1814D /* ItemsFetcher.swift */; };
+		B41201261F2F9FE300F1814D /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41201251F2F9FE300F1814D /* TableViewController.swift */; };
+		B41201281F2FA2F900F1814D /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41201271F2FA2F900F1814D /* ItemCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		B412011D1F2F7CAC00F1814D /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		B412011F1F2F84E800F1814D /* HNItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HNItem.swift; sourceTree = "<group>"; };
 		B41201231F2F91B000F1814D /* ItemsFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsFetcher.swift; sourceTree = "<group>"; };
+		B41201251F2F9FE300F1814D /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		B41201271F2FA2F900F1814D /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 			children = (
 				B412011F1F2F84E800F1814D /* HNItem.swift */,
 				B41200EF1F2F7B9B00F1814D /* ViewController.swift */,
+				B41201251F2F9FE300F1814D /* TableViewController.swift */,
+				B41201271F2FA2F900F1814D /* ItemCell.swift */,
 				B412011D1F2F7CAC00F1814D /* Result.swift */,
 				B412011B1F2F7C4000F1814D /* API.swift */,
 				B41200F11F2F7B9B00F1814D /* Main.storyboard */,
@@ -274,7 +280,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B41201281F2FA2F900F1814D /* ItemCell.swift in Sources */,
 				B41201201F2F84E800F1814D /* HNItem.swift in Sources */,
+				B41201261F2F9FE300F1814D /* TableViewController.swift in Sources */,
 				B41201241F2F91B000F1814D /* ItemsFetcher.swift in Sources */,
 				B41200F01F2F7B9B00F1814D /* ViewController.swift in Sources */,
 				B412011C1F2F7C4000F1814D /* API.swift in Sources */,

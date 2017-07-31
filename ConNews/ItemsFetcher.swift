@@ -2,7 +2,11 @@ import Foundation
 
 final class ItemsFetcher {
     
-    fileprivate(set) var items: [HNItem]
+    fileprivate(set) var items: [HNItem] {
+        didSet {
+            updateCallback()
+        }
+    }
     
     fileprivate let fetchQueue: OperationQueue = {
         let queue = OperationQueue()
@@ -11,8 +15,11 @@ final class ItemsFetcher {
         return queue
     }()
     
-    init(_ itemIds: [ItemId]) {
+    fileprivate let updateCallback: () -> Void
+    
+    init(_ itemIds: [ItemId], onUpdate callback: @escaping () -> Void) {
         items = itemIds.map({ return HNItem.notLoaded($0) })
+        updateCallback = callback
     }
     
     func start() {

@@ -14,15 +14,20 @@ struct LoadedItem {
     init?(json: [String: Any]) {
         guard
             let id = json["id"] as? ItemId,
-            let title = json["title"] as? String,
-            let urlString = json["url"] as? String,
-            let url = URL(string: urlString)
+            let title = json["title"] as? String
         else {
             return nil
         }
         
         self.id = id
         self.title = title
+        
+        let urlString = json["url"] as? String ?? "https://news.ycombinator.com/item?id=\(id)"
+        
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        
         self.url = url
     }
 }
