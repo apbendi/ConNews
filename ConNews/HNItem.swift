@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 enum HNItem {
     case loaded(LoadedItem)
@@ -10,6 +10,7 @@ struct LoadedItem {
     let id: ItemId
     let title: String
     let url: URL
+    var icon: UIImage? = nil
     
     init?(json: [String: Any]) {
         guard

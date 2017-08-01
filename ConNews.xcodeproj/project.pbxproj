@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B41200EE1F2F7B9B00F1814D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41200ED1F2F7B9B00F1814D /* AppDelegate.swift */; };
-		B41200F01F2F7B9B00F1814D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41200EF1F2F7B9B00F1814D /* ViewController.swift */; };
 		B41200F31F2F7B9B00F1814D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B41200F11F2F7B9B00F1814D /* Main.storyboard */; };
 		B41200F51F2F7B9B00F1814D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B41200F41F2F7B9B00F1814D /* Assets.xcassets */; };
 		B41200F81F2F7B9B00F1814D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B41200F61F2F7B9B00F1814D /* LaunchScreen.storyboard */; };
@@ -42,7 +41,6 @@
 /* Begin PBXFileReference section */
 		B41200EA1F2F7B9B00F1814D /* ConNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B41200ED1F2F7B9B00F1814D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B41200EF1F2F7B9B00F1814D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B41200F21F2F7B9B00F1814D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B41200F41F2F7B9B00F1814D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B41200F71F2F7B9B00F1814D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -110,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				B412011F1F2F84E800F1814D /* HNItem.swift */,
-				B41200EF1F2F7B9B00F1814D /* ViewController.swift */,
 				B41201251F2F9FE300F1814D /* TableViewController.swift */,
 				B41201271F2FA2F900F1814D /* ItemCell.swift */,
 				B412011D1F2F7CAC00F1814D /* Result.swift */,
@@ -284,7 +281,6 @@
 				B41201201F2F84E800F1814D /* HNItem.swift in Sources */,
 				B41201261F2F9FE300F1814D /* TableViewController.swift in Sources */,
 				B41201241F2F91B000F1814D /* ItemsFetcher.swift in Sources */,
-				B41200F01F2F7B9B00F1814D /* ViewController.swift in Sources */,
 				B412011C1F2F7C4000F1814D /* API.swift in Sources */,
 				B412011E1F2F7CAC00F1814D /* Result.swift in Sources */,
 				B41200EE1F2F7B9B00F1814D /* AppDelegate.swift in Sources */,
