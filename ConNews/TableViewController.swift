@@ -80,6 +80,19 @@ extension TableViewController {
     }
 }
 
+// MARK: SFSafariViewControllerDelegate
+
+extension TableViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewController(_ controller: SFSafariViewController, didCompleteInitialLoad didLoadSuccessfully: Bool) {
+        fetcher?.resume()
+    }
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        fetcher?.resume()
+    }
+}
+
 // MARK: Helpers
 
 private extension TableViewController {
@@ -103,6 +116,10 @@ private extension TableViewController {
     
     func show(url: URL) {
         let safari = SFSafariViewController(url: url)
+        safari.delegate = self
+        
+        fetcher?.pause()
+        
         present(safari, animated: true, completion: nil)
     }
 }

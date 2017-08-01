@@ -64,6 +64,14 @@ final class ItemsFetcher {
             self.fetchQueue.addOperation(iconOp)
         }
     }
+    
+    func pause() {
+        fetchQueue.isSuspended = true
+    }
+    
+    func resume() {
+        fetchQueue.isSuspended = false
+    }
 }
 
 private class StoryFetchOperation: Operation {
