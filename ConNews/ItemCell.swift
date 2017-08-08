@@ -9,6 +9,12 @@ class ItemCell: UITableViewCell {
     func configure(with item: LoadedItem) {
         titleLabel?.text = item.title
         urlLabel?.text = item.url.host
-        iconImage?.image = item.icon
+        
+        if let icon = item.icon {
+            iconImage?.backgroundColor = UIColor.clear
+            iconImage?.image = icon
+        }
     }
+    
+    func notstyle() { print("Style called") }
 }

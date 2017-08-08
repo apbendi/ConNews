@@ -20,6 +20,7 @@ final class ItemsFetcher {
     init(_ itemIds: [ItemId], onUpdate callback: @escaping () -> Void) {
         items = itemIds.map({ return HNItem.notLoaded($0) })
         updateCallback = callback
+        updateCallback()
     }
     
     func start() {
@@ -45,10 +46,7 @@ final class ItemsFetcher {
             iconOp.addDependency(fetchOp)
             
             iconOp.completionBlock = {
-                guard let icon = iconOp.fetchedIcon else {
-                    print("No favicon fetched")
-                    return
-                }
+                let icon = iconOp.fetchedIcon ?? #imageLiteral(resourceName: "Placeholder")
                 
                 print("Fetched Favicon! \(icon)")
                 
