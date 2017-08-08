@@ -15,6 +15,8 @@ final class ItemsFetcher {
         return queue
     }()
     
+    fileprivate let serialQueue = DispatchQueue(label: "co.scopelift.ConNews-Serializer", qos: .userInitiated)
+    
     fileprivate let updateCallback: () -> Void
     
     init(_ itemIds: [ItemId], onUpdate callback: @escaping () -> Void) {
@@ -37,9 +39,9 @@ final class ItemsFetcher {
                 
                 print("Fetched Story: \(item)")
                 
-                objc_sync_enter(self)
-                self.items[index] = .loaded(item)
-                objc_sync_exit(self)
+                self.serialQueue.async {
+                    self.items[index] = .loaded(item)
+                }
             }
             
             let iconOp = IconFetchOperation()
@@ -50,12 +52,14 @@ final class ItemsFetcher {
                 
                 print("Fetched Favicon! \(icon)")
                 
-                objc_sync_enter(self)
+
                 if case .loaded(var item) = self.items[index] {
                     item.icon = icon
-                    self.items[index] = .loaded(item)
+                    
+                    self.serialQueue.async {
+                        self.items[index] = .loaded(item)
+                    }
                 }
-                objc_sync_exit(self)
             }
             
             self.fetchQueue.addOperation(fetchOp)
