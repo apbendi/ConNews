@@ -103,9 +103,9 @@ private extension TableViewController {
             case .failure(let error):
                 print("Error fetching stories: \(error.localizedDescription)")
             case .success(let items):
-                self.fetcher = ItemsFetcher(items, onUpdate: {
+                self.fetcher = ItemsFetcher(items, onUpdate: { [weak self] in
                     DispatchQueue.main.async {
-                        self.tableView?.reloadData()
+                        self?.tableView?.reloadData()
                     }
                 })
                 
