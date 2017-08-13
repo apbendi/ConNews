@@ -2,7 +2,7 @@ import UIKit
 
 fileprivate let HNTopStoriesListPath = "https://hacker-news.firebaseio.com/v0/topstories.json"
 fileprivate let HNItemURLPath = ""
-typealias ItemId = Int
+typealias StoryId = Int
 
 struct API {
     
@@ -12,22 +12,22 @@ struct API {
     
     // MARK: Public
     
-    static func fetchTopStoriesList(callback: @escaping (Result<[ItemId]>) -> Void) {
+    static func fetchTopStoriesList(callback: @escaping (Result<[StoryId]>) -> Void) {
         guard let url = URL(string: HNTopStoriesListPath) else {
-            fatalError()
+            fatalError("Invalid Story List URL")
         }
         
         let task = session.dataTask(with: url) { data, response, error in
             guard let data = data else {
-                print("No data")
+                callback(failure(for: error, alternateMessage: NSLocalizedString("No data returned from story list fetch", comment: "")))
                 return
             }
             
             guard
                 let json = try? JSONSerialization.jsonObject(with: data),
-                let items = json as? [ItemId]
+                let items = json as? [StoryId]
             else {
-                print("No JSON")
+                callback(failure(alternateMessage: NSLocalizedString("Fetched Story List data is invalid", comment: "")))
                 return
             }
             
@@ -37,7 +37,7 @@ struct API {
         task.resume()
     }
     
-    static func fetchItem(with itemId: ItemId, callback: @escaping (Result<LoadedItem>) -> Void) {
+    static func fetchStory(with itemId: StoryId, callback: @escaping (Result<LoadedStory>) -> Void) {
         guard let url = itemURL(for: itemId) else {
             print("No Item")
             return
@@ -45,15 +45,15 @@ struct API {
         
         let task = session.dataTask(with: url) { data, response, error in
             guard let data = data else {
-                print("No data")
+                callback(failure(for: error, alternateMessage: NSLocalizedString("No data returned from story fetch", comment: "")))
                 return
             }
             
             guard
                 let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
-                let item = LoadedItem(json: json)
+                let item = LoadedStory(json: json)
             else {
-                print("No JSON")
+                callback(failure(alternateMessage: NSLocalizedString("Fetched Story data is invalid", comment: "")))
                 return
             }
             
@@ -63,23 +63,23 @@ struct API {
         task.resume()
     }
     
-    static func fetchFavIcon(for item: LoadedItem, callback: @escaping (Result<UIImage>) -> Void) {
+    static func fetchFavIcon(for item: LoadedStory, callback: @escaping (Result<UIImage>) -> Void) {
         guard
             let host = item.url.host,
             let iconURL = URL(string: "http://\(host)/favicon.ico")
         else {
-            callback(failureFor(alternateMessage: NSLocalizedString("Invalid URL for Favicon", comment: "")))
+            callback(failure(alternateMessage: NSLocalizedString("Invalid URL for Favicon", comment: "")))
             return
         }
         
         let task = session.dataTask(with: iconURL) { data, response, error in
             guard let data = data else {
-                callback(failureFor(error: error, alternateMessage: NSLocalizedString("No data returned from icon fetch", comment: "")))
+                callback(failure(for: error, alternateMessage: NSLocalizedString("No data returned from icon fetch", comment: "")))
                 return
             }
             
             guard let image = UIImage(data: data) else {
-                callback(failureFor(alternateMessage: NSLocalizedString("Fetched image data is invalid", comment: "")))
+                callback(failure(alternateMessage: NSLocalizedString("Fetched image data is invalid", comment: "")))
                 return
             }
             
@@ -94,11 +94,11 @@ struct API {
 
 private extension API {
     
-    static func itemURL(for itemId: ItemId) -> URL? {
+    static func itemURL(for itemId: StoryId) -> URL? {
         return URL(string: "https://hacker-news.firebaseio.com/v0/item/\(itemId).json")
     }
     
-    static func failureFor<T>(error: Error? = nil, alternateMessage: String? = nil) -> Result<T> {
+    static func failure<T>(for error: Error? = nil, alternateMessage: String? = nil) -> Result<T> {
         return .failure(errorOrUnknown(error: error, alternateMessage: alternateMessage))
     }
     
