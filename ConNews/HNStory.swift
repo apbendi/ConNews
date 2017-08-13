@@ -1,20 +1,20 @@
 import UIKit
 
-enum HNItem {
-    case loaded(LoadedItem)
-    case notLoaded(ItemId)
+enum HNStory {
+    case loaded(LoadedStory)
+    case notLoaded(StoryId)
 }
 
-struct LoadedItem {
+struct LoadedStory {
     
-    let id: ItemId
+    let id: StoryId
     let title: String
     let url: URL
     var icon: UIImage? = nil
     
     init?(json: [String: Any]) {
         guard
-            let id = json["id"] as? ItemId,
+            let id = json["id"] as? StoryId,
             let title = json["title"] as? String
         else {
             return nil

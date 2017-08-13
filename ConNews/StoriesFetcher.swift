@@ -1,8 +1,8 @@
 import UIKit
 
-final class ItemsFetcher {
+final class StoriesFetcher {
     
-    fileprivate(set) var items: [HNItem] {
+    fileprivate(set) var stories: [HNStory] {
         didSet {
             updateCallback()
         }
@@ -19,28 +19,28 @@ final class ItemsFetcher {
     
     fileprivate let updateCallback: () -> Void
     
-    init(_ itemIds: [ItemId], onUpdate callback: @escaping () -> Void) {
-        items = itemIds.map({ return HNItem.notLoaded($0) })
+    init(_ storyIds: [StoryId], onUpdate callback: @escaping () -> Void) {
+        stories = storyIds.map({ return HNStory.notLoaded($0) })
         updateCallback = callback
         updateCallback()
     }
     
     func start() {
-        for index in 0..<items.count {
-            guard case .notLoaded(let itemId) = items[index] else {
+        for index in 0..<stories.count {
+            guard case .notLoaded(let storyId) = stories[index] else {
                 return
             }
             
-            let fetchOp = StoryFetchOperation(with: itemId)
+            let fetchOp = StoryFetchOperation(with: storyId)
             fetchOp.completionBlock = {
-                guard let item = fetchOp.fetchedItem else {
+                guard let story = fetchOp.fetchedStory else {
                     return
                 }
                 
-                print("Fetched Story: \(item)")
+                print("Fetched Story: \(story)")
                 
                 self.serialQueue.async {
-                    self.items[index] = .loaded(item)
+                    self.stories[index] = .loaded(story)
                 }
             }
             
@@ -53,11 +53,11 @@ final class ItemsFetcher {
                 print("Fetched Favicon! \(icon)")
                 
 
-                if case .loaded(var item) = self.items[index] {
-                    item.icon = icon
+                if case .loaded(var story) = self.stories[index] {
+                    story.icon = icon
                     
                     self.serialQueue.async {
-                        self.items[index] = .loaded(item)
+                        self.stories[index] = .loaded(story)
                     }
                 }
             }
@@ -78,12 +78,12 @@ final class ItemsFetcher {
 
 private class StoryFetchOperation: Operation {
     
-    private let itemId: ItemId
+    private let storyId: StoryId
     
-    private(set) var fetchedItem: LoadedItem? = nil
+    private(set) var fetchedStory: LoadedStory? = nil
     
-    init(with itemId: ItemId) {
-        self.itemId = itemId
+    init(with storyId: StoryId) {
+        self.storyId = storyId
         super.init()
         self.qualityOfService = .userInitiated
     }
@@ -95,12 +95,12 @@ private class StoryFetchOperation: Operation {
         
         group.enter()
         
-        API.fetchItem(with: itemId) { result in
+        API.fetchStory(with: storyId) { result in
             switch result {
             case .failure(let error):
                 print("Error Fetching story: \(error.localizedDescription)")
-            case .success(let item):
-                self.fetchedItem = item
+            case .success(let story):
+                self.fetchedStory = story
             }
             
             group.leave()
@@ -126,7 +126,7 @@ private class IconFetchOperation: Operation {
         
         guard
             let storyOp = self.dependencies.first as? StoryFetchOperation,
-            let item = storyOp.fetchedItem
+            let story = storyOp.fetchedStory
         else {
             print("No dependency for favicon URL")
             return
@@ -138,7 +138,7 @@ private class IconFetchOperation: Operation {
         
         group.enter()
         
-        API.fetchFavIcon(for: item) { result in
+        API.fetchFavIcon(for: story) { result in
             switch result {
             case .failure(let error):
                 print("Error Fetching Favicon: \(error)")

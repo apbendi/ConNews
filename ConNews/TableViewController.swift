@@ -3,7 +3,7 @@ import SafariServices
 
 class TableViewController: UITableViewController {
     
-    fileprivate var fetcher: ItemsFetcher? = nil
+    fileprivate var fetcher: StoriesFetcher? = nil
     
     // MARK: Lifecycle
     
@@ -26,7 +26,7 @@ extension TableViewController {
             return 0
         }
         
-        return fetcher.items.count
+        return fetcher.stories.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -36,14 +36,14 @@ extension TableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
             let fetcher = fetcher,
-            indexPath.row < fetcher.items.count,
-            case .loaded(let item) = fetcher.items[indexPath.row],
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as? ItemCell
+            indexPath.row < fetcher.stories.count,
+            case .loaded(let story) = fetcher.stories[indexPath.row],
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StoryCell", for: indexPath) as? StoryCell
         else {
             return tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
         }
         
-        cell.configure(with: item)
+        cell.configure(with: story)
         return cell
     }
 }
@@ -54,8 +54,8 @@ extension TableViewController {
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         if let fetcher = fetcher,
-            indexPath.row < fetcher.items.count,
-            case .loaded = fetcher.items[indexPath.row]
+            indexPath.row < fetcher.stories.count,
+            case .loaded = fetcher.stories[indexPath.row]
         {
             return true
         } else {
@@ -66,16 +66,16 @@ extension TableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard
             let fetcher = fetcher,
-            indexPath.row < fetcher.items.count
+            indexPath.row < fetcher.stories.count
         else {
             return
         }
         
-        switch fetcher.items[indexPath.row] {
-        case .loaded(let item):
-            show(url: item.url)
-        case .notLoaded(let itemId):
-            print("Item Id: \(itemId)")
+        switch fetcher.stories[indexPath.row] {
+        case .loaded(let story):
+            show(url: story.url)
+        case .notLoaded(let storyId):
+            print("Story Id: \(storyId)")
         }
     }
 }
@@ -102,8 +102,8 @@ private extension TableViewController {
             switch result {
             case .failure(let error):
                 print("Error fetching stories: \(error.localizedDescription)")
-            case .success(let items):
-                self.fetcher = ItemsFetcher(items, onUpdate: { [weak self] in
+            case .success(let stories):
+                self.fetcher = StoriesFetcher(stories, onUpdate: { [weak self] in
                     DispatchQueue.main.async {
                         self?.tableView?.reloadData()
                     }
