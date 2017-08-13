@@ -109,6 +109,7 @@
 			children = (
 				B412011F1F2F84E800F1814D /* HNStory.swift */,
 				B41201251F2F9FE300F1814D /* TableViewController.swift */,
+				B41201231F2F91B000F1814D /* StoriesFetcher.swift */,
 				B41201271F2FA2F900F1814D /* StoryCell.swift */,
 				B412011D1F2F7CAC00F1814D /* Result.swift */,
 				B412011B1F2F7C4000F1814D /* API.swift */,
@@ -117,7 +118,6 @@
 				B41200F61F2F7B9B00F1814D /* LaunchScreen.storyboard */,
 				B41200F91F2F7B9B00F1814D /* Info.plist */,
 				B41200ED1F2F7B9B00F1814D /* AppDelegate.swift */,
-				B41201231F2F91B000F1814D /* StoriesFetcher.swift */,
 			);
 			path = ConNews;
 			sourceTree = "<group>";
